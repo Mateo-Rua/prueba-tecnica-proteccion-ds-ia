@@ -1,0 +1,11 @@
+data/raw/*
+data/processed/*
+!data/**/.gitkeep
+.env
+kaggle.json
+PRUEBA_TECNICA.md
+*.docx
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+*.parquet

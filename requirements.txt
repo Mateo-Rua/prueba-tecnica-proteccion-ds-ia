@@ -1,0 +1,14 @@
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+lightgbm
+duckdb
+pyarrow
+fastapi
+uvicorn
+python-dotenv
+langchain
+langchain-google-genai
+jupyter
