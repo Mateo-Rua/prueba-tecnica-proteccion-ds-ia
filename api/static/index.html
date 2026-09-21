@@ -165,7 +165,8 @@
     const segmento = conocido ? p.segmento : "Cliente nuevo";
     const metricas = conocido ? [
       ["Pedidos", p.frecuencia], ["Gasto total", reales.format(p.gasto)], ["Última compra", `hace ${p.recencia} días`],
-      ["Reseña promedio", p.score ? `★ ${p.score}` : "sin reseña"], ["Categoría favorita", p.favorita], ["Estado", p.uf]
+      ["Reseña promedio", p.score ? `★ ${p.score}` : "sin reseña"], ["Categoría favorita", p.favorita],
+      ["Ubicación", `${p.ciudad}, ${p.uf}`]
     ] : [["Estado", r.uf], ["Historial", "sin compras"]];
 
     document.getElementById("resultado").innerHTML = `

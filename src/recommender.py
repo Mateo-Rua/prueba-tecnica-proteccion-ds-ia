@@ -113,6 +113,7 @@ def perfiles_clientes(clientes: "pd.DataFrame", base: "pd.DataFrame", items: "pd
             "segmento": str(fila.segmento),
             "subsegmento": fila.subsegmento,
             "uf": fila.estado,
+            "ciudad": fila.ciudad.title().replace(" De ", " de ").replace(" Do ", " do "),
             "favorita": fila.categoria_favorita,
             "frecuencia": int(fila.frecuencia),
             "gasto": round(float(fila.gasto_total), 2),
