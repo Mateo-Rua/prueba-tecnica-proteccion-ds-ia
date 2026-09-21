@@ -34,6 +34,7 @@ Presenta un plan de máximo 8 líneas y espera mi aprobación.
 6. Perfil por segmento: n° clientes, % clientes, % ingresos, recencia/frecuencia/gasto medianos, score promedio, % mala experiencia, top categorías.
 7. Acción de marketing sugerida por segmento (1 línea cada una).
 8. Crear variable **HISTORIAL_COMPRAS** por cliente (texto resumen para el agente del 3.2), ej.: "3 pedidos | gasto total R$540 | ticket prom. R$180 | categoría favorita: salud y belleza | última compra hace 45 días | score prom. 4,7 | mala experiencia: no".
+9. al final del notebookc dame una conclusion d elo que encontraste con RFM y con K-Means y explicame que podemos aporvechar del uno y del otro para la sustentacion.
 9. Crear `notebooks/02_punto2_segmentacion_ubicacion.ipynb` (sección 2.1).
 
 ## Entregables
@@ -41,6 +42,17 @@ Presenta un plan de máximo 8 líneas y espera mi aprobación.
 - `data/processed/clientes_segmentados.parquet` (incluye segmento, variables RFM e `historial_compras`).
 - `reports/tables/2_1_perfil_segmentos.csv`
 - Figuras: tamaño e ingresos por segmento, distribución de días entre compras con el umbral, scatter recencia vs gasto por segmento, silhouette/codo.
+
+## Registro de resultados
+Al terminar la tarea, reemplaza el texto "_Pendiente_" de la sección "## Punto X.X" en reports/RESULTADOS.md con:
+- **Pregunta:** (copiar textual del enunciado en PRUEBA_TECNICA.md)
+- **Respuesta directa:** 2-4 líneas con cifras clave
+- **Método:** 1 línea
+- **hallazgo principal:**2-4 líneas escribir los hallazgos mas importante que encontraste en esa tarea, es util para la sustentacion.
+- **descripcion de los pasos:**en 5 paso muy breves de solo texto y de una linea cada uno me das una breve descripcion de la solucion que le diste a este punto.
+- **Archivos de soporte:** rutas de tablas y figuras generadas
+
+No modifiques secciones de otros puntos ni el resto del archivo.
 
 ## Validación (checklist ✅/❌)
 - N° clientes en la tabla = `customer_unique_id` únicos con pedidos válidos.
@@ -50,3 +62,4 @@ Presenta un plan de máximo 8 líneas y espera mi aprobación.
 
 ## Salida final en el chat
 Máximo 5 líneas: enfoque elegido, segmentos con su % de clientes y % de ingresos, y el umbral de riesgo. Registrar supuestos en SUPUESTOS.md.
+

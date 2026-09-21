@@ -330,3 +330,35 @@ def perfil_dolor_cliente(exp: pd.DataFrame, temas: pd.DataFrame | None = None) -
     perfil["tuvo_mala_experiencia"] = perfil["malas_experiencias"] > 0
     perfil["motivo_principal"] = perfil.index.map(motivo_cliente).fillna("sin mala experiencia")
     return perfil.round(2).reset_index()
+
+
+# ---------------------------------------------------------------------------
+# Punto 2.1 – variable HISTORIAL_COMPRAS para el agente de IA (punto 3.2)
+# ---------------------------------------------------------------------------
+
+
+def construir_historial_compras(clientes: pd.DataFrame) -> pd.Series:
+    """Resumen en texto del comportamiento de cada cliente, listo para el prompt.
+
+    El agente del 3.2 no puede recibir una tabla: recibe una frase corta con los
+    hechos que cambian el tono de la conversación (cuánto compra, qué le gusta,
+    hace cuánto no vuelve y si quedó mal atendido).
+    """
+
+    def linea(fila: pd.Series) -> str:
+        partes = [
+            f"{int(fila['frecuencia'])} pedido{'s' if fila['frecuencia'] != 1 else ''}",
+            f"gasto total R${fila['gasto_total']:,.0f}",
+            f"ticket prom. R${fila['ticket_promedio']:,.0f}",
+            f"categoría favorita: {fila['categoria_favorita']}",
+            f"última compra hace {int(fila['recencia'])} días",
+        ]
+        if pd.notna(fila["score_promedio"]):
+            partes.append(f"score prom. {fila['score_promedio']:.1f}")
+        partes.append("mala experiencia: " + ("sí" if fila["tuvo_mala_experiencia"] else "no"))
+        if fila["tuvo_mala_experiencia"]:
+            partes.append(f"motivo: {fila['motivo_principal']}")
+        partes.append(f"segmento: {fila['segmento']}")
+        return " | ".join(partes)
+
+    return clientes.apply(linea, axis=1)
