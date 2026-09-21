@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agente IA personalizado</title>
+<style>
+  :root { --fondo:#f4f6fa; --panel:#fff; --texto:#1c2434; --suave:#5f6b7e; --borde:#e3e8f0; --primario:#1f4e79; --claro:#e8f0f8;
+          --joven:#2563a8; --mayor:#c2410c; --vip:#8a5a00; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif; background:var(--fondo); color:var(--texto); }
+  header { background:var(--primario); color:#fff; padding:18px 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+  header h1 { margin:0; font-size:20px; font-weight:600; }
+  header p { margin:3px 0 0; font-size:13px; opacity:.8; }
+  header a { color:#fff; font-size:13px; opacity:.85; }
+  main { max-width:1200px; margin:0 auto; padding:20px; display:grid; grid-template-columns:330px 1fr; gap:18px; }
+  @media (max-width:880px) { main { grid-template-columns:1fr; } }
+  .panel { background:var(--panel); border:1px solid var(--borde); border-radius:14px; padding:16px; }
+  .panel h2 { margin:0 0 4px; font-size:15px; }
+  .ayuda { color:var(--suave); font-size:13px; margin:0 0 12px; }
+  .escenario { width:100%; text-align:left; background:#fff; border:1px solid var(--borde); border-left:5px solid var(--c); border-radius:10px;
+               padding:12px; margin-bottom:10px; cursor:pointer; font:inherit; }
+  .escenario:hover, .escenario.sel { background:var(--claro); border-color:var(--c); }
+  .escenario b { display:block; font-size:14px; }
+  .escenario span { font-size:12px; color:var(--suave); }
+  .ficha { font-size:12px; color:var(--suave); background:var(--fondo); border-radius:10px; padding:10px; margin-top:6px; line-height:1.5; }
+  .chat { display:flex; flex-direction:column; height:calc(100vh - 130px); min-height:520px; padding:0; overflow:hidden; }
+  .cabecera { padding:14px 18px; border-bottom:1px solid var(--borde); display:flex; align-items:center; gap:12px; }
+  .avatar { width:40px; height:40px; border-radius:50%; background:var(--c, var(--primario)); color:#fff; display:grid; place-items:center; font-weight:700; }
+  .cabecera small { display:block; color:var(--suave); font-size:12px; }
+  .mensajes { flex:1; overflow-y:auto; padding:18px; display:flex; flex-direction:column; gap:10px; background:#fafbfd; }
+  .burbuja { max-width:78%; padding:10px 14px; border-radius:14px; font-size:14px; line-height:1.5; white-space:pre-wrap; animation:entrar .25s ease; }
+  .agente { background:#fff; border:1px solid var(--borde); align-self:flex-start; border-bottom-left-radius:4px; }
+  .cliente { background:var(--primario); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+  .meta { font-size:11px; color:var(--suave); align-self:flex-start; margin-top:-6px; }
+  .escribiendo { color:var(--suave); font-size:13px; font-style:italic; }
+  @keyframes entrar { from { opacity:0; transform:translateY(6px); } }
+  form { display:flex; gap:8px; padding:12px; border-top:1px solid var(--borde); background:#fff; }
+  input { flex:1; padding:11px 12px; border:1px solid var(--borde); border-radius:10px; font:inherit; font-size:14px; }
+  button.enviar { background:var(--primario); color:#fff; border:0; border-radius:10px; padding:0 18px; font:inherit; cursor:pointer; }
+  .sugerencias { display:flex; gap:6px; flex-wrap:wrap; padding:0 12px 10px; background:#fff; }
+  .sugerencias button { background:var(--claro); border:0; border-radius:999px; padding:6px 12px; font:inherit; font-size:12px; cursor:pointer; color:var(--primario); }
+  .vacio { margin:auto; text-align:center; color:var(--suave); font-size:14px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Protección · Agente de IA hiper-personalizado</h1>
+    <p>Prototipo de prueba técnica (Punto 3.2) · Claude en Amazon Bedrock · datos del e-commerce Olist</p>
+  </div>
+  <a href="/">← Ver el recomendador (2.2)</a>
+</header>
+<main>
+  <aside>
+    <div class="panel">
+      <h2>Elige un cliente</h2>
+      <p class="ayuda">Clientes reales · edad y género simulados (CRM)</p>
+      <div id="escenarios"></div>
+    </div>
+  </aside>
+  <section class="panel chat" id="chat">
+    <div class="vacio">Selecciona un cliente para iniciar la conversación.</div>
+  </section>
+</main>
+<script>
+  const ESTILO = {
+    joven_digital: { nombre: "Sofi", rol: "Asesora de compras", titulo: "Joven digital y frecuente", color: "var(--joven)",
+      sugerencias: ["¿Qué me recomiendas?", "Busco algo para mi apartamento", "¿Cuánto cuesta el envío?"] },
+    mayor_mala_experiencia: { nombre: "Andrés", rol: "Servicio al cliente", titulo: "Mayor, inactivo, con mala experiencia", color: "var(--mayor)",
+      sugerencias: ["Mi último pedido llegó tarde", "No sé si volver a comprar", "Quiero hablar con una persona"] },
+    vip: { nombre: "Valentina", rol: "Ejecutiva de cuenta preferencial", titulo: "Cliente VIP / corporativo", color: "var(--vip)",
+      sugerencias: ["Es para mi empresa", "Necesito 10 unidades", "¿Tienen descuento por volumen?"] },
+  };
+  const esc = t => String(t ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+  const negrita = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+  let actual = null, historial = [];
+
+  async function iniciar() {
+    const datos = await fetch("/api/escenarios").then(r => r.json());
+    document.getElementById("escenarios").innerHTML = Object.entries(datos).map(([k, d]) => `
+      <button class="escenario" style="--c:${ESTILO[k].color}" data-k="${k}" onclick="abrir('${k}')">
+        <b>${ESTILO[k].titulo}</b>
+        <span>${d.edad} años · ${esc(d.genero)} · ${esc(d.ciudad)}, ${d.uf} · ${esc(d.segmento)}</span>
+        <div class="ficha">${esc(d.historial)}</div>
+      </button>`).join("");
+  }
+
+  function abrir(k) {
+    actual = k; historial = [];
+    const e = ESTILO[k];
+    document.querySelectorAll(".escenario").forEach(b => b.classList.toggle("sel", b.dataset.k === k));
+    const chat = document.getElementById("chat");
+    chat.style.setProperty("--c", e.color);
+    chat.innerHTML = `
+      <div class="cabecera"><div class="avatar">${e.nombre[0]}</div><div><b>${e.nombre}</b><small>${e.rol} · en línea</small></div></div>
+      <div class="mensajes" id="mensajes"></div>
+      <div class="sugerencias">${e.sugerencias.map(s => `<button onclick="enviar('${s}')">${s}</button>`).join("")}</div>
+      <form onsubmit="event.preventDefault(); enviar(this.texto.value); this.texto.value='';">
+        <input name="texto" placeholder="Escribe tu mensaje…" autocomplete="off"><button class="enviar">Enviar</button>
+      </form>`;
+    // Turno oculto: el agente abre la conversación según su system prompt
+    conversar("(El cliente acaba de abrir el chat en la web. Salúdalo según tus instrucciones.)", false);
+  }
+
+  function pintar(texto, clase, meta) {
+    const caja = document.getElementById("mensajes");
+    caja.insertAdjacentHTML("beforeend", `<div class="burbuja ${clase}">${clase === "agente" ? negrita(texto) : esc(texto)}</div>`
+      + (meta ? `<div class="meta">${meta}</div>` : ""));
+    caja.scrollTop = caja.scrollHeight;
+  }
+
+  function enviar(texto) { if (texto.trim() && actual) { pintar(texto, "cliente"); conversar(texto, true); } }
+
+  async function conversar(texto, visible) {
+    historial.push({ role: "user", content: texto });
+    const caja = document.getElementById("mensajes");
+    caja.insertAdjacentHTML("beforeend", `<div class="escribiendo" id="escribiendo">${ESTILO[actual].nombre} está escribiendo…</div>`);
+    caja.scrollTop = caja.scrollHeight;
+    try {
+      const r = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ escenario: actual, mensajes: historial }) }).then(res => res.json());
+      historial.push({ role: "assistant", content: r.respuesta });
+      document.getElementById("escribiendo")?.remove();
+      pintar(r.respuesta, "agente", `${(r.latencia_ms / 1000).toFixed(1)} s · Claude (Bedrock)`);
+    } catch (e) {
+      historial.pop();
+      document.getElementById("escribiendo")?.remove();
+      pintar("No pude responder en este momento. Intenta de nuevo.", "agente");
+    }
+  }
+  iniciar();
+</script>
+</body>
+</html>
