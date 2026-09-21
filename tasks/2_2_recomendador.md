@@ -13,6 +13,8 @@ Crea la arquitectura y el flujo lógico de un modelo de recomendación automáti
 ## Paso 0 – Plan
 Presenta un plan de máximo 8 líneas y espera mi aprobación.
 
+- NOTA. Recuerda que todo archivo .py o .ipynb que tengas que crear con condigo debe ser lo mas preciso, sencillo y entendible posible el codigo que va dentro de esos archivos,no te extiendas mucho haciendo el coddigo, halso lo mas simple y corto posible.
+
 ## Parte A – Documento de arquitectura (`reports/arquitectura_2_2.md`)
 1. **Diagrama en Mermaid** con dos capas:
    - **Offline (batch diario):** ingesta → features de cliente (segmento, RFM, historial, dolor) → generación de candidatos → entrenamiento del modelo de ranking → carga a feature store / cache.
@@ -40,6 +42,17 @@ Presenta un plan de máximo 8 líneas y espera mi aprobación.
 ## Entregables
 - `reports/arquitectura_2_2.md` (con Mermaid) y `reports/figures/arquitectura_2_2.png` si es posible exportarlo.
 - `src/recommender.py`, `api/main.py`, artefactos en `data/processed/`.
+
+## Registro de resultados
+Al terminar la tarea, reemplaza el texto "_Pendiente_" de la sección "## Punto X.X" en reports/RESULTADOS.md con:
+- **Pregunta:** (copiar textual del enunciado en PRUEBA_TECNICA.md)
+- **Respuesta directa:** 2-4 líneas con cifras clave
+- **Método:** 1 línea
+- **hallazgo principal:**2-4 líneas escribir los hallazgos mas importante que encontraste en esa tarea, es util para la sustentacion.
+- **descripcion de los pasos:**en 5 paso muy breves de solo texto y de una linea cada uno me das una breve descripcion de la solucion que le diste a este punto.
+- **Archivos de soporte:** rutas de tablas y figuras generadas
+
+No modifiques secciones de otros puntos ni el resto del archivo.
 
 ## Validación (checklist ✅/❌)
 - El endpoint responde para: 1 cliente fiel, 1 VIP, 1 esporádico, 1 en riesgo y 1 id inexistente (mostrar las 5 respuestas resumidas).

@@ -35,7 +35,8 @@ Presenta un plan de máximo 8 líneas y espera mi aprobación.
 7. Acción de marketing sugerida por segmento (1 línea cada una).
 8. Crear variable **HISTORIAL_COMPRAS** por cliente (texto resumen para el agente del 3.2), ej.: "3 pedidos | gasto total R$540 | ticket prom. R$180 | categoría favorita: salud y belleza | última compra hace 45 días | score prom. 4,7 | mala experiencia: no".
 9. al final del notebookc dame una conclusion d elo que encontraste con RFM y con K-Means y explicame que podemos aporvechar del uno y del otro para la sustentacion.
-9. Crear `notebooks/02_punto2_segmentacion_ubicacion.ipynb` (sección 2.1).
+10. Crear `notebooks/02_punto2_segmentacion_ubicacion.ipynb` (sección 2.1).
+11. Recuerda que todo archivo .py o .ipynb que tengas que crear con condigo debe ser lo mas preciso, sencillo y entendible posible el codigo que va dentro de esos archivos,no te extiendas mucho haciendo el coddigo, halso lo mas simple y corto posible
 
 ## Entregables
 - `src/segmentation.py` (RFM, reglas, K-Means, perfilado) y funciones de historial en `src/features.py`.
