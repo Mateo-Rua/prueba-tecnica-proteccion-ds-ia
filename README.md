@@ -83,11 +83,17 @@ Los supuestos de cada punto están en `SUPUESTOS.md`.
 │   ├── knowledge_base.json   Base de conocimiento (3.1)
 │   └── prompts/              3 system prompts y ejemplos llenos (3.2)
 ├── data/                 raw/ (CSV de Kaggle, no se suben) y processed/ (parquet intermedios)
-├── reports/              Figuras y tablas que generan los notebooks
+├── reports/              Entregables de negocio
+│   ├── presentacion_ejecutiva.pptx   ⭐ PRESENTACIÓN EJECUTIVA (15 diapositivas)
+│   ├── arquitectura_2_2.md   Arquitectura del recomendador (2.2)
+│   ├── figures/              Gráficos que generan los notebooks
+│   └── tables/               Tablas de resultados en CSV
 ├── tasks/                Instrucciones de trabajo de cada punto
 ├── SUPUESTOS.md          Supuestos y decisiones de cada punto
 └── requirements.txt
 ```
+
+> 📊 **La presentación ejecutiva está en [`reports/presentacion_ejecutiva.pptx`](reports/presentacion_ejecutiva.pptx)** (15 diapositivas): recoge los resultados de los 3 puntos, los hallazgos de negocio y los escenarios asumidos. Los gráficos que la sustentan están en [`reports/figures/`](reports/figures/) y las cifras en [`reports/tables/`](reports/tables/).
 
 ---
 

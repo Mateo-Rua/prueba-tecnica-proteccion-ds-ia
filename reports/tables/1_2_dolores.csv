@@ -1,0 +1,10 @@
+﻿dolor,pedidos,pedidos_con_resena,tasa_mala_experiencia,score_promedio,malas_experiencias
+Entrega tarde (retraso > 0 días),6534,6381,62.42,2.27,3983
+Entrega a tiempo (control),89936,89443,9.27,4.29,8289
+Pedido cancelado o no disponible,1234,1200,80.83,1.66,970
+Entrega lenta a tiempo (> 18 días),10228,10151,13.97,3.99,1418
+Flete > 50% del valor del producto,15499,15499,14.92,4.06,2312
+Flete <= 50% (control),82418,82418,14.05,4.11,11581
+Pedido con varios vendedores,1264,1264,47.31,2.86,598
+Pedido con varios ítems,9690,9690,27.67,3.6,2681
+Pedido de un solo ítem (control),88227,88227,12.71,4.16,11212

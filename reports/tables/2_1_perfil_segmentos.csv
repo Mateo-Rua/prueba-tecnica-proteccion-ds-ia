@@ -1,0 +1,6 @@
+﻿segmento,clientes,pct_clientes,ingresos,pct_ingresos,recencia_mediana,frecuencia_media,gasto_mediano,ticket_mediano,score_promedio,pct_mala_experiencia,top_categorias,accion_marketing
+Fieles,1060,1.12,345945.67,2.2,84.5,2.17,239.92,114.42,4.3,18.87,"Cama, mesa y baño, Deporte y ocio, Belleza y salud",Programa de fidelización y cross-sell: son los únicos con hábito de recompra.
+VIP / Alto valor,9141,9.62,5809864.87,36.91,225.0,1.07,472.41,458.58,3.96,18.82,"Belleza y salud, Relojes y regalos, Informática y accesorios",Atención preferente y recompra asistida; reactivar al VIP dormido antes que captar uno nuevo.
+Esporádicos recientes,32248,33.95,3659645.42,23.25,88.0,1.0,98.29,98.04,4.21,11.84,"Belleza y salud, Cama, mesa y baño, Deporte y ocio",Segunda compra en caliente: cupón con vencimiento en las semanas siguientes.
+En riesgo de abandono,22727,23.93,2577721.97,16.38,226.0,1.03,97.51,95.44,3.94,17.85,"Cama, mesa y baño, Deporte y ocio, Informática y accesorios","Reactivación con oferta y, si tuvo mala experiencia, resolución del PQR antes de vender."
+Perdidos / Inactivos,29814,31.39,3345936.08,21.26,402.0,1.02,95.21,93.3,4.18,11.96,"Cama, mesa y baño, Deporte y ocio, Muebles y decoración",Campaña masiva de bajo costo (email/remarketing); no invertir en contacto uno a uno.
